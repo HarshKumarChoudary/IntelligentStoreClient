@@ -6,7 +6,7 @@ import { CampaignDetails, CreateCampaign, Home, Profile, Disconnect } from './pa
 
 const App = () => {
   return (
-    <div className="relative sm:-8 p-4 bg-[#13131a] min-h-screen flex flex-row">
+    <div className="relative sm:-8 p-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen flex flex-row">
       <div className="sm:flex hidden mr-10 relative">
         <Sidebar />
       </div>
