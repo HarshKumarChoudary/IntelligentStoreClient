@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { DisplayCampaigns } from '../components';
 import { useStateContext } from '../context'
 
-const Home = () => {
+const Home = ({ status, title }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
 
@@ -17,12 +17,12 @@ const Home = () => {
   }
 
   useEffect(() => {
-    if(contract) fetchCampaigns();
-  }, [address, contract]);
+    if (contract) fetchCampaigns();
+  }, [address, contract, status]);
 
   return (
-    <DisplayCampaigns 
-      title="All Campaigns"
+    <DisplayCampaigns
+      title={title}
       isLoading={isLoading}
       campaigns={campaigns}
     />

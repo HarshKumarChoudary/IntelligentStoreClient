@@ -10,6 +10,7 @@ export const StateContextProvider = ({ children }) => {
   const { contract } = useContract('0x6d6DcB46BA411130b213909872443D841DF95e2B');
   const { mutateAsync: createCampaign } = useContractWrite(contract, 'createCampaign');
   const [isActive, setIsActive] = useState('dashboard');
+  const [isSuccess, setIsSuccess] = useState(true);
   const address = useAddress();
   const connect = useMetamask();
   const disconnect = useDisconnect();
@@ -92,7 +93,9 @@ export const StateContextProvider = ({ children }) => {
         getDonations,
         disconnect,
         isActive,
-        setIsActive
+        setIsActive,
+        isSuccess,
+        setIsSuccess
       }}
     >
       {children}
