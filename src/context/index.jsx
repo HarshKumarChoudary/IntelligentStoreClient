@@ -7,10 +7,10 @@ import { EditionMetadataWithOwnerOutputSchema } from '@thirdweb-dev/sdk';
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
-  const { contract } = useContract('0x6d6DcB46BA411130b213909872443D841DF95e2B');
+  const { contract } = useContract('0x6df2bD1C23783A7f61A0BeE8B4D18543E9F83f2D');
   const { mutateAsync: createCampaign } = useContractWrite(contract, 'createCampaign');
   const [isActive, setIsActive] = useState('dashboard');
-  const [isSuccess, setIsSuccess] = useState(true);
+  const [isSuccess, setIsSuccess] = useState('1');
   const address = useAddress();
   const connect = useMetamask();
   const disconnect = useDisconnect();

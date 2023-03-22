@@ -13,14 +13,14 @@ const Archive = () => {
                 <CustomButton
                     btnType="button"
                     title={'Successful Campaigns'}
-                    styles={isSuccess ? 'bg-green-500' :''}
-                    handleClick={() => { setIsSuccess(true); }}
+                    styles={isSuccess === '2' ? 'bg-green-500' :''}
+                    handleClick={() => { setIsSuccess('2'); }}
                 />
                 <CustomButton
                     btnType="button"
                     title={'Un-Successful Campaigns'}
-                    styles={!isSuccess ? 'bg-green-500' : ''}
-                    handleClick={() => { setIsSuccess(false); }}
+                    styles={isSuccess === '3' ? 'bg-green-500' : ''}
+                    handleClick={() => { setIsSuccess('3'); }}
                 />
             </div>
             <br />

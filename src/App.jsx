@@ -15,7 +15,7 @@ const App = () => {
         <Navbar />
 
         <Routes>
-          <Route path="/" element={<Home title='All Campaigns'/>} />
+          <Route path="/" element={<Home status='1' title='All Ongoing Campaigns'/>} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-campaign" element={<CreateCampaign />} />
           <Route path="/campaign-details/:id" element={<CampaignDetails />} />
