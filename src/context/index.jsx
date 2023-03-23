@@ -7,7 +7,7 @@ import { EditionMetadataWithOwnerOutputSchema } from '@thirdweb-dev/sdk';
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
-  const { contract } = useContract('0x6df2bD1C23783A7f61A0BeE8B4D18543E9F83f2D');
+  const { contract } = useContract('0x59911878c36f2e97983abD8cfFA11201FA77DB79');
   const { mutateAsync: createCampaign } = useContractWrite(contract, 'createCampaign');
   const [isActive, setIsActive] = useState('dashboard');
   const [isSuccess, setIsSuccess] = useState('1');
@@ -87,6 +87,14 @@ export const StateContextProvider = ({ children }) => {
     return filteredCampaigns;
   }
 
+  const getWithdrawnCampaigns = async () => {
+    const allCampaigns = await getUserCampaigns();
+
+    const filteredCampaigns = allCampaigns.filter((campaign) => campaign.status === 1);
+
+    return filteredCampaigns;
+  }
+
   const donate = async (pId, amount) => {
     const data = await contract.call('donateToCampaign', pId, { value: ethers.utils.parseEther(amount)});
 
@@ -127,7 +135,8 @@ export const StateContextProvider = ({ children }) => {
         isSuccess,
         setIsSuccess,
         getSuccessfullCampaigns,
-        getUnSuccessfullCampaigns
+        getUnSuccessfullCampaigns,
+        getWithdrawnCampaigns
       }}
     >
       {children}

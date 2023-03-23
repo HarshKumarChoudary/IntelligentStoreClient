@@ -4,15 +4,18 @@ import { DisplayCampaigns } from '../components';
 import { useStateContext } from '../context'
 
 // status = 1 -> ongoing, 2->sucessfull, 3-> not successfull.
-const Home = ({ status, title }) => {
+const Home = ({ withdrawn, status, title }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
 
-  const { address, contract, getCampaigns, getSuccessfullCampaigns, getUnSuccessfullCampaigns } = useStateContext();
+  const { address, contract, getCampaigns, getSuccessfullCampaigns, getUnSuccessfullCampaigns, getWithdrawnCampaigns } = useStateContext();
 
   const fetchCampaigns = async () => {
     setIsLoading(true);
     let data = 0;
+    if (withdrawn === 1) {
+      data = await getWithdrawnCampaigns();
+    }
     if(status === '1')
       data = await getCampaigns();
     else if (status === '2') {
