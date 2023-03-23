@@ -49,6 +49,36 @@ export const StateContextProvider = ({ children }) => {
     return parsedCampaings;
   }
 
+  const getSuccessfullCampaigns = async () => {
+    const campaigns = await contract.call('getSuccessfullCampaigns');
+    const parsedCampaings = campaigns.map((campaign, i) => ({
+      owner: campaign.owner,
+      title: campaign.title,
+      description: campaign.description,
+      target: ethers.utils.formatEther(campaign.target.toString()),
+      deadline: campaign.deadline.toNumber(),
+      amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
+      image: campaign.image,
+      pId: i
+    }));
+    return parsedCampaings;
+  }
+
+  const getUnSuccessfullCampaigns = async () => {
+    const campaigns = await contract.call('getUnSuccessfullCampaigns');
+    const parsedCampaings = campaigns.map((campaign, i) => ({
+      owner: campaign.owner,
+      title: campaign.title,
+      description: campaign.description,
+      target: ethers.utils.formatEther(campaign.target.toString()),
+      deadline: campaign.deadline.toNumber(),
+      amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
+      image: campaign.image,
+      pId: i
+    }));
+    return parsedCampaings;
+  }
+
   const getUserCampaigns = async () => {
     const allCampaigns = await getCampaigns();
 
@@ -95,7 +125,9 @@ export const StateContextProvider = ({ children }) => {
         isActive,
         setIsActive,
         isSuccess,
-        setIsSuccess
+        setIsSuccess,
+        getSuccessfullCampaigns,
+        getUnSuccessfullCampaigns
       }}
     >
       {children}

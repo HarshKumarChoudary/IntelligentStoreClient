@@ -8,7 +8,7 @@ const Home = ({ status, title }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
 
-  const { address, contract, getCampaigns } = useStateContext();
+  const { address, contract, getCampaigns, getSuccessfullCampaigns, getUnSuccessfullCampaigns } = useStateContext();
 
   const fetchCampaigns = async () => {
     setIsLoading(true);

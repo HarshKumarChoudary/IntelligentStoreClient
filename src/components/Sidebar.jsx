@@ -1,3 +1,4 @@
+import { list } from 'postcss';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -17,7 +18,7 @@ const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const { disconnect, isActive, setIsActive } = useStateContext();
+  const { disconnect, isActive, setIsActive, isSuccess, setIsSuccess } = useStateContext();
 
   return (
     <div className="flex justify-between items-center flex-col sticky top-5 h-[93vh]">
@@ -36,6 +37,9 @@ const Sidebar = () => {
                 if(!link.disabled) {
                   setIsActive(link.name);
                   navigate(link.link);
+                }
+                if (link.name === "archive") {
+                  setIsSuccess('2');
                 }
               }}
             />
