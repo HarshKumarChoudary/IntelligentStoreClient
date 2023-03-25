@@ -1,21 +1,18 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { Sidebar, Navbar } from './components';
-import { CampaignDetails, CreateCampaign, Home, Profile, Disconnect, Archive, Withdraw } from './pages';
+import { CampaignDetails, CreateCampaign, Home, Profile, Disconnect, Archive, Withdraw, First, Offline, Upload } from './pages';
+import QrCode from './pages/QrCode';
+import './index.css';
 
 const App = () => {
   return (
-    <div className="relative sm:-8 p-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen flex flex-row">
-      <div className="sm:flex hidden mr-10 relative">
-        <Sidebar />
-      </div>
-
-      <div className="flex-1 max-sm:w-full max-w-[1280px] mx-auto sm:pr-5">
-        <Navbar />
-
+    <div className="relative sm:-8 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-300 min-h-screen flex flex-row">
         <Routes>
-          <Route path="/" element={<Home status='1' title='All Ongoing Campaigns'/>} />
+          <Route path="/" element={<First />} />
+          <Route path="/nft-home" element={<Home status='1' title='All Digital Arts' />} />
+          <Route path="/offline-home" element={<Offline />} />
+          <Route path="/offline-home/upload" element={<Upload />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-campaign" element={<CreateCampaign />} />
           <Route path="/campaign-details/:id" element={<CampaignDetails />} />
@@ -23,7 +20,6 @@ const App = () => {
           <Route path="/archive" element={<Archive />} />
           <Route path="/disconnect" element={<Disconnect />} />
         </Routes>
-      </div>
     </div>
   )
 }

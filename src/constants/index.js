@@ -4,7 +4,7 @@ export const navlinks = [
   {
     name: 'dashboard',
     imgUrl: dashboard,
-    link: '/',
+    link: '/home',
   },
   {
     name: 'campaign',
@@ -38,3 +38,7 @@ export const navlinks = [
     link: '/disconnect',
   },
 ];
+
+// structure of project
+// first welcome page, showing we can get bulk upload and single uplad and then will generate the QRs for them.
+// 

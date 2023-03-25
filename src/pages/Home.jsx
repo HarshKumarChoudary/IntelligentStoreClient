@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 
-import { DisplayCampaigns } from '../components';
+import { Sidebar, Navbar } from '../components';
+import { DisplayNFT } from '../components';
 import { useStateContext } from '../context'
+import '../index.css';
 
 // status = 1 -> ongoing, 2->sucessfull, 3-> not successfull.
 const Home = ({ withdrawn, status, title }) => {
@@ -32,11 +34,20 @@ const Home = ({ withdrawn, status, title }) => {
   }, [address, contract, status]);
 
   return (
-    <DisplayCampaigns
-      title={title}
-      isLoading={isLoading}
-      campaigns={campaigns}
-    />
+  <>
+    <div className="p-4 sm:flex hidden mr-10 relative">
+        <Sidebar />
+      </div>
+
+      <div className="p-4 flex-1 max-sm:w-full max-w-[1280px] mx-auto sm:pr-5">
+        <Navbar />
+        <DisplayNFT
+          title={title}
+          isLoading={isLoading}
+          campaigns={campaigns}
+        />
+      </div>
+    </>
   )
 }
 

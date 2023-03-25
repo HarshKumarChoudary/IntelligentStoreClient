@@ -4,7 +4,7 @@ import { Skeleton } from '@mui/material';
 import FundCard from './FundCard';
 import { loader } from '../assets';
 
-const DisplayCampaigns = ({ title, isLoading, campaigns }) => {
+const DisplayNFT = ({ title, isLoading, campaigns }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (campaign) => {
@@ -41,4 +41,4 @@ const DisplayCampaigns = ({ title, isLoading, campaigns }) => {
   )
 }
 
-export default DisplayCampaigns
+export default DisplayNFT
