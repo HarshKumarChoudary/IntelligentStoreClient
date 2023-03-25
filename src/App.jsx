@@ -1,8 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { CampaignDetails, CreateCampaign, Home, Profile, Disconnect, Archive, Withdraw, First, Offline, Upload } from './pages';
-import QrCode from './pages/QrCode';
+import { CampaignDetails, CreateCampaign, Home, Profile, Disconnect, First, Offline, Upload, Validate } from './pages';
 import './index.css';
 
 const App = () => {
@@ -13,11 +12,10 @@ const App = () => {
           <Route path="/nft-home" element={<Home status='1' title='All Digital Arts' />} />
           <Route path="/offline-home" element={<Offline />} />
           <Route path="/offline-home/upload" element={<Upload />} />
+          <Route path="/offline-home/validate" element={<Validate />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-campaign" element={<CreateCampaign />} />
           <Route path="/campaign-details/:id" element={<CampaignDetails />} />
-          <Route path="/withdraw" element={<Withdraw />} />
-          <Route path="/archive" element={<Archive />} />
           <Route path="/disconnect" element={<Disconnect />} />
         </Routes>
     </div>

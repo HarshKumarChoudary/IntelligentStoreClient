@@ -7,10 +7,11 @@ import template from '../assets/files/template.png';
 import * as XLSX from 'xlsx';
 
 const Upload = () => {
-    const { address, createProducts } = useStateContext();
+    const { address, createProducts, generateUrls } = useStateContext();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [csvfile, setCsvfile] = useState(undefined);
+    const [urls, setURL] = useState([]);
 
     function importCSV() {
 
@@ -25,14 +26,15 @@ const Upload = () => {
             let description = []
             let isbn = []
             for (var key in jsonData) {
-                console.log(key);
+                // console.log(key);
                 names.push(jsonData[key].Name);
                 description.push(jsonData[key].Description);
                 isbn.push(jsonData[key].ISBN);
             }
             await createProducts(names, description, isbn);
+            const res = await generateUrls(address, isbn);
+            setURL(res);
             setIsLoading(false);
-            // navigate('/');
         };
         reader.readAsArrayBuffer(csvfile);
     };
@@ -94,6 +96,14 @@ const Upload = () => {
                                         </div>
                                     </div>
                                 </p>
+                                <br /> 
+                                <p>The generated URLs are listed below</p>
+                                <br />
+                                <ol>
+                                    {urls.map((url) => (
+                                        <li key={url}>{url}<br /></li>
+                                    ))}
+                                </ol>
                             </div>
                         </div>
                     </div>

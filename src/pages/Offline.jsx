@@ -42,6 +42,18 @@ const Offline = () => {
                   />
                 </div>
               </div>
+              <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+                <div className="sm:flex hidden flex-row justify-center gap-4">
+                  <CustomButton
+                    btnType="button"
+                    title={'Want to validate product?'}
+                    styles={address ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
+                    handleClick={() => {
+                      navigate('validate')
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
