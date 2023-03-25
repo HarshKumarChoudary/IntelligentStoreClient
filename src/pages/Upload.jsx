@@ -7,24 +7,35 @@ import template from '../assets/files/template.png';
 import * as XLSX from 'xlsx';
 
 const Upload = () => {
-    const { address } = useStateContext();
+    const { address, createProducts } = useStateContext();
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
     const [csvfile, setCsvfile] = useState(undefined);
 
     function importCSV() {
 
         let reader = new FileReader();
         reader.onload = async function (e) {
+            setIsLoading(true);
             let data = new Uint8Array(e.target.result);
             let workbook = XLSX.read(data, { type: 'array' });
             let worksheet = workbook.Sheets['Sheet1'];
             const jsonData = XLSX.utils.sheet_to_json(worksheet);
-
-            return jsonData;
+            let names = []
+            let description = []
+            let isbn = []
+            for (var key in jsonData) {
+                console.log(key);
+                names.push(jsonData[key].Name);
+                description.push(jsonData[key].Description);
+                isbn.push(jsonData[key].ISBN);
+            }
+            await createProducts(names, description, isbn);
+            setIsLoading(false);
+            // navigate('/');
         };
         reader.readAsArrayBuffer(csvfile);
     };
-
 
     if (!address) {
         return (
@@ -51,6 +62,7 @@ const Upload = () => {
                 <div>
                     <div className="bg-white py-24 sm:py-32">
                         <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                            {isLoading && <Loader />}
                             <div className="mx-auto max-w-2xl lg:text-center">
                                 <h2 className={`${styles.headText}text-base font-semibold leading-7 text-indigo-600`}>Upload the <br /><br /><p className={`${styles.cardText} text-green-400`}>Product Details</p></h2>
                                 <p className="mt-6 text-lg leading-8 text-pink-600">
