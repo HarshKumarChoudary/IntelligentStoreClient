@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-
+import { Qr } from './components';
 import { CampaignDetails, CreateCampaign, Home, Profile, Disconnect, First, Offline, Upload, Validate } from './pages';
 import './index.css';
 
@@ -12,7 +12,8 @@ const App = () => {
           <Route path="/nft-home" element={<Home status='1' title='All Digital Arts' />} />
           <Route path="/offline-home" element={<Offline />} />
           <Route path="/offline-home/upload" element={<Upload />} />
-          <Route path="/offline-home/validate" element={<Validate />} />
+          <Route path="/offline-home/validate/:code/:isbn" element={<Validate />} />
+          <Route path="/offline-home/upload/qr" element={<Qr />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-campaign" element={<CreateCampaign />} />
           <Route path="/campaign-details/:id" element={<CampaignDetails />} />

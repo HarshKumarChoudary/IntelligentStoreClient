@@ -12,6 +12,7 @@ export const StateContextProvider = ({ children }) => {
   const address = useAddress();
   const connect = useMetamask();
   const disconnect = useDisconnect();
+  const [qr, setQr] = useState(undefined);
 
   const createProducts = async (names, description, isbn) => {
     try {
@@ -31,11 +32,25 @@ export const StateContextProvider = ({ children }) => {
   const generateUrls = async (address, isbn) => {
     var res = []
     var cur = btoa(address);
-    for (var i = 0; i < isbn.length; ++i){
+    for (var i = 0; i < isbn.length; ++i) {
       var tmp = cur.concat('/');
-      res.push(tmp.concat(isbn[i]));
+      tmp = tmp + isbn[i];
+      var tmp2 = "https://intelligent-store-client.vercel.app/offline-home/validate/".concat(tmp);
+      res.push(tmp2);
     }
-    return res;
+    console.log(res);
+    var final_res = {
+      "data": res[0],
+      "output": { "filename": "qrcodes", "format": "png" }
+    }
+    // for (var x in res) {
+    //   let data = {
+    //     "data": res[x],
+    //     "output": { "filename": res[x], "format": "svg" }
+    //   }
+    //   final_res["items"].push(data);
+    // }
+    return final_res;
   }
 
   const getProductdetail = async (address, isbn) => {
@@ -62,7 +77,9 @@ export const StateContextProvider = ({ children }) => {
         isSuccess,
         generateUrls,
         setIsSuccess,
-        getProductdetail
+        getProductdetail,
+        qr,
+        setQr,
       }}
     >
       {children}

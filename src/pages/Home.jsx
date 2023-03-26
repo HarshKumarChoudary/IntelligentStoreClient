@@ -35,10 +35,6 @@ const Home = ({ withdrawn, status, title }) => {
 
   return (
   <>
-    <div className="ml-4 sm:flex hidden mr-10 relative">
-        <Sidebar />
-      </div>
-
       <div className="mt-4 flex-1 max-sm:w-full max-w-[1280px] mx-auto sm:pr-5">
         <Navbar display="1"/>
         <DisplayNFT

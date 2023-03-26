@@ -14,18 +14,12 @@ export const navlinks = [
   {
     name: 'payment',
     imgUrl: payment,
-    link: '/',
-    disabled: true,
+    link: '/offline-home/upload',
   },
   {
     name: 'withdraw',
     imgUrl: withdraw,
     link: '/withdraw',
-  },
-  {
-    name: 'archive',
-    imgUrl: archive,
-    link: '/archive',
   },
   {
     name: 'profile',

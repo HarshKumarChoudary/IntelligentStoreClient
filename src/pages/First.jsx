@@ -11,7 +11,7 @@ const First = () => {
             <div className={styles.hocContentBox}>
                 <div className={styles.hocBodyWrapper}>
                     <div className="flex flex-row w-full">
-                        <h1 className={`flex ${styles.headText} head-text`}>Welcome to Smart <br /> Market-place</h1>
+                        <h1 className={`flex ${styles.headText} head-text`}>Welcome to Unique <br /> Market-place</h1>
                     </div>
                 </div>
                 <div className='flex flex-col'>

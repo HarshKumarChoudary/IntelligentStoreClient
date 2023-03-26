@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useStateContext } from '../context'
-import { CustomButton, Loader } from '../components';
+import { Loader, Navbar } from '../components';
 import styles from '../styles';
-import template from '../assets/files/template.png';
 import * as XLSX from 'xlsx';
+import axios from 'axios';
 
 const Upload = () => {
-    const { address, createProducts, generateUrls } = useStateContext();
+    const { address, createProducts, generateUrls, setQr } = useStateContext();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [csvfile, setCsvfile] = useState(undefined);
@@ -26,7 +26,6 @@ const Upload = () => {
             let description = []
             let isbn = []
             for (var key in jsonData) {
-                // console.log(key);
                 names.push(jsonData[key].Name);
                 description.push(jsonData[key].Description);
                 isbn.push(jsonData[key].ISBN);
@@ -34,82 +33,77 @@ const Upload = () => {
             await createProducts(names, description, isbn);
             const res = await generateUrls(address, isbn);
             setURL(res);
+
+            const options = {
+                method: 'POST',
+                url: 'https://qrcode3.p.rapidapi.com/qrcode/text',
+                headers: {
+                    'content-type': 'application/json',
+                    'X-RapidAPI-Key': '33efbe6d70msh99b7f2040a4e0a1p14d79ejsn0c39bde04e0d',
+                    'X-RapidAPI-Host': 'qrcode3.p.rapidapi.com'
+                },
+                data: res,
+                responseType: "arraybuffer"
+            };
+
+            await axios.request(options).then(
+                (response) => {
+                    console.log(response);
+                    console.log(response.data);
+                    console.log(response.status);
+                    console.log(response.statusText);
+                    console.log(response.headers);
+                    console.log(response.config);
+                    let base64ImageString = Buffer.from(response.data, 'binary').toString('base64')
+                    console.log(base64ImageString);
+                    setQr("data:image/png;base64," + base64ImageString)
+                    navigate("qr")
+                }
+            )
+            .catch(function (error) {
+                console.error(error);
+            });
+
             setIsLoading(false);
         };
         reader.readAsArrayBuffer(csvfile);
     };
 
-    if (!address) {
-        return (
-            <>
-                <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-                    <div className="sm:flex hidden flex-row justify-center gap-4">
-                    <CustomButton
-                        btnType="button"
-                        title={'Please first connect your wallet'}
-                        styles={address ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
-                        handleClick={() => {
-                            navigate('/offline-home');
-                        }}
-                    />
-                    </div>
-                </div>
-            </>
-        )
-    }
-
     return (
         <>
-            <div className="flex-1">
-                <div>
-                    <div className="bg-white py-24 sm:py-32">
-                        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                            {isLoading && <Loader />}
-                            <div className="mx-auto max-w-2xl lg:text-center">
-                                <h2 className={`${styles.headText}text-base font-semibold leading-7 text-indigo-600`}>Upload the <br /><br /><p className={`${styles.cardText} text-green-400`}>Product Details</p></h2>
-                                <p className="mt-6 text-lg leading-8 text-pink-600">
-                                    <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-                                        <div className="sm:flex hidden flex-row justify-center gap-4">
-                                            <a href={template}>Want a Template?</a>
-                                        </div>
-                                    </div>
-                                </p>
-                                <p className="text-lg leading-8 text-pink-600">
-                                    <div className="mx-auto mt-12 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-                                        <div className="sm:flex hidden flex-row justify-center gap-4">
+                <div className="flex-1 mt-2 max-sm:w-full max-w-[1280px] mx-auto sm:pr-5">
+                <Navbar display="0" />
+                {isLoading && <Loader />}
+                <div className={`flex flex-col ${styles.hocContainer}`}>
+                        <div className={`flex flex-col ${styles.hocContentBox}`}>
+                            <div className={`flex flex-col ${styles.hocBodyWrapper}`}>
+                                <div className="flex flex-col w-full mt-16">
+                                    <h1 className={`flex ${styles.headText} head-text`}>Upload Products</h1>
+                                    <br />
+                                </div>
+                        </div>
+                            <div className='flex flex-row'>
+                                <div className='flex flex-row'>
+                                <div className='flex flex-1'>
+                                    <div className="mx-auto max-w-2xl sm:mt-20 lg:max-w-4xl">
+                                        <div className="sm:flex flex-col gap-4">
                                             <input
-                                                className="border-none justify-center place-content-center ml-52"
+                                                className="border-none"
                                                 type="file"
                                                 name="file"
                                                 placeholder={null}
                                                 onChange={(event) => { setCsvfile(event.target.files[0]); }}
                                             />
                                         </div>
-                                        <div className="sm:flex hidden flex-row justify-center gap-4">
-
-                                            <CustomButton
-                                                btnType="button"
-                                                title={'Uplaod the CSV'}
-                                                styles={address ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
-                                                handleClick={importCSV}
-                                            />
-                                        </div>
                                     </div>
-                                </p>
-                                <br /> 
-                                <p>The generated URLs are listed below</p>
-                                <br />
-                                <ol>
-                                    {urls.map((url) => (
-                                        <li key={url}>{url}<br /></li>
-                                    ))}
-                                </ol>
+                                    <button className={`${styles.btn} mt-24 h-16 bg-blue-500`} onClick={importCSV}>Upload the Excel</button>
+                                    </div>
+                                </div>
                             </div>
+                            <p className={`mb-32 mt-20 ${styles.footerText}`}>Made with 💖 by Harsh Kumar Choudhary</p>
                         </div>
                     </div>
                 </div>
-            </div>
-
         </>
     )
 }
