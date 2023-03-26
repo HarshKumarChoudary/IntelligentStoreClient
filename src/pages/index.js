@@ -1,6 +1,6 @@
 export { default as Home } from './Home';
 export { default as Profile } from './Profile';
-export { default as CreateCampaign } from './CreateCampaign';
+export { default as CreateNFT } from './CreateNFT';
 export { default as CampaignDetails } from './CampaignDetails';
 export { default as Disconnect } from './Disconnect.jsx';
 export { default as First } from './First.jsx';

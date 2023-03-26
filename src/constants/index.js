@@ -4,12 +4,12 @@ export const navlinks = [
   {
     name: 'dashboard',
     imgUrl: dashboard,
-    link: '/home',
+    link: '/nft-home',
   },
   {
-    name: 'campaign',
+    name: 'nft',
     imgUrl: createCampaign,
-    link: '/create-campaign',
+    link: '/create-nft',
   },
   {
     name: 'payment',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Qr } from './components';
-import { CampaignDetails, CreateCampaign, Home, Profile, Disconnect, First, Offline, Upload, Validate } from './pages';
+import { CampaignDetails, CreateNFT, Home, Profile, Disconnect, First, Offline, Upload, Validate } from './pages';
 import './index.css';
 
 const App = () => {
@@ -15,8 +15,8 @@ const App = () => {
           <Route path="/offline-home/validate/:code/:isbn" element={<Validate />} />
           <Route path="/offline-home/upload/qr" element={<Qr />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/create-campaign" element={<CreateCampaign />} />
-          <Route path="/campaign-details/:id" element={<CampaignDetails />} />
+          <Route path="/create-nft" element={<CreateNFT />} />
+          <Route path="/nft-details/:id" element={<CampaignDetails />} />
           <Route path="/disconnect" element={<Disconnect />} />
         </Routes>
     </div>

@@ -10,27 +10,28 @@ const Home = ({ withdrawn, status, title }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
 
-  const { address, contract, getCampaigns, getSuccessfullCampaigns, getUnSuccessfullCampaigns, getWithdrawnCampaigns } = useStateContext();
+  const { address, contract, setIsActive } = useStateContext();
 
-  const fetchCampaigns = async () => {
-    setIsLoading(true);
-    let data = 0;
-    if (withdrawn === 1) {
-      data = await getWithdrawnCampaigns();
-    }
-    if(status === '1')
-      data = await getCampaigns();
-    else if (status === '2') {
-        data = await getSuccessfullCampaigns();
-      } else {
-        data = await getUnSuccessfullCampaigns();
-      }
-    setCampaigns(data);
-    setIsLoading(false);
-  }
+  // const fetchCampaigns = async () => {
+  //   setIsLoading(true);
+  //   let data = 0;
+  //   if (withdrawn === 1) {
+  //     data = await getWithdrawnCampaigns();
+  //   }
+  //   if(status === '1')
+  //     data = await getCampaigns();
+  //   else if (status === '2') {
+  //       data = await getSuccessfullCampaigns();
+  //     } else {
+  //       data = await getUnSuccessfullCampaigns();
+  //     }
+  //   setCampaigns(data);
+  //   setIsLoading(false);
+  // }
 
   useEffect(() => {
-    if (contract) fetchCampaigns();
+    // if (contract) fetchCampaigns();
+    setIsActive('dashboard');
   }, [address, contract, status]);
 
   return (
