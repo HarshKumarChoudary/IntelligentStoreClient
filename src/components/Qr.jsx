@@ -13,10 +13,17 @@ const { qr } = useStateContext();
           <div className={`flex flex-col ${styles.hocContainer}`}>
               <div className={`flex flex-col ${styles.hocContentBox}`}>
                   <div className={`flex flex-col ${styles.hocBodyWrapper}`}>
-                      <div className="flex flex-col w-full mt-16">
-                              <h1 className={`flex ${styles.headText} head-text`}><img src={qr} alt="Qr Will appear here" /></h1>
+                          <div className="flex flex-row w-full mt-16">
+                              {
+                                  qr.map((q, i) => {
+                                      return (<h1 className={`flex ${styles.headText} head-text`}><img src={q} alt="Qr Will appear here" /></h1>
+                          )})    
+                              }
                           <br />
-                      </div>
+                          </div>
+                          <br />
+                          <br />
+                          <h1 className={`flex ${styles.headText} head-text`}><img src={qr} alt="Qr Will appear here" /></h1>
                   </div>
                   
                   <p className={`mb-32 mt-20 ${styles.footerText}`}>Made with 💖 by Harsh Kumar Choudhary</p>

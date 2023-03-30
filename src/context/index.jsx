@@ -12,7 +12,7 @@ export const StateContextProvider = ({ children }) => {
   const address = useAddress();
   const connect = useMetamask();
   const disconnect = useDisconnect();
-  const [qr, setQr] = useState(undefined);
+  const [qr, setQr] = useState([]);
 
   const createProducts = async (names, description, isbn) => {
     try {
@@ -39,9 +39,12 @@ export const StateContextProvider = ({ children }) => {
       res.push(tmp2);
     }
     console.log(res);
-    var final_res = {
-      "data": res[0],
-      "output": { "filename": "qrcodes", "format": "png" }
+    var final_res = [];
+    for (var x in res) {
+      final_res.push({
+        "data": res[x],
+        "output": { "filename": "qrcodes" + String(x), "format": "png" }
+      });
     }
     // for (var x in res) {
     //   let data = {

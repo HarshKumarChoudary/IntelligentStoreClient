@@ -30,40 +30,39 @@ const Upload = () => {
                 description.push(jsonData[key].Description);
                 isbn.push(jsonData[key].ISBN);
             }
-            await createProducts(names, description, isbn);
+            // await createProducts(names, description, isbn);
             const res = await generateUrls(address, isbn);
             setURL(res);
+            var collect = []
 
-            const options = {
-                method: 'POST',
-                url: 'https://qrcode3.p.rapidapi.com/qrcode/text',
-                headers: {
-                    'content-type': 'application/json',
-                    'X-RapidAPI-Key': '33efbe6d70msh99b7f2040a4e0a1p14d79ejsn0c39bde04e0d',
-                    'X-RapidAPI-Host': 'qrcode3.p.rapidapi.com'
-                },
-                data: res,
-                responseType: "arraybuffer"
-            };
+            
+            for (var x in res) {
+                var d = res[x];
+                const options = {
+                    method: 'POST',
+                    url: 'https://qrcode3.p.rapidapi.com/qrcode/text',
+                    headers: {
+                        'content-type': 'application/json',
+                        'X-RapidAPI-Key': '33efbe6d70msh99b7f2040a4e0a1p14d79ejsn0c39bde04e0d',
+                        'X-RapidAPI-Host': 'qrcode3.p.rapidapi.com'
+                    },
+                    data: d,
+                    responseType: "arraybuffer"
+                };
 
-            await axios.request(options).then(
-                (response) => {
-                    console.log(response);
-                    console.log(response.data);
-                    console.log(response.status);
-                    console.log(response.statusText);
-                    console.log(response.headers);
-                    console.log(response.config);
-                    let base64ImageString = Buffer.from(response.data, 'binary').toString('base64')
-                    console.log(base64ImageString);
-                    setQr("data:image/png;base64," + base64ImageString)
-                    navigate("qr")
-                }
-            )
-            .catch(function (error) {
-                console.error(error);
-            });
-
+                await axios.request(options).then(
+                    (response) => {
+                        let base64ImageString = Buffer.from(response.data, 'binary').toString('base64')
+                        collect.push("data:image/png;base64," + base64ImageString)
+                    }
+                )
+                    .catch(function (error) {
+                        console.error(error);
+                    });
+            }
+            
+            setQr(collect);
+            navigate("qr");
             setIsLoading(false);
         };
         reader.readAsArrayBuffer(csvfile);
