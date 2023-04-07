@@ -1,11 +1,12 @@
 import React, { useContext, createContext, useState } from 'react';
 
 import { useAddress, useContract, useMetamask, useContractWrite, useDisconnect } from '@thirdweb-dev/react';
+import { ethers } from 'ethers';
 
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
-  const { contract } = useContract('0xD49c94292568d276D396E7075087b0fF79C98D63');
+  const { contract } = useContract('0x59911878c36f2e97983abD8cfFA11201FA77DB79');
   const { mutateAsync: createProduct } = useContractWrite(contract, 'createProduct');
   const [isActive, setIsActive] = useState('dashboard');
   const [isSuccess, setIsSuccess] = useState('1');
@@ -14,57 +15,52 @@ export const StateContextProvider = ({ children }) => {
   const disconnect = useDisconnect();
   const [qr, setQr] = useState([]);
 
-  const createProducts = async (names, description, isbn) => {
+  const createProducts = async (names, description, isbn, price) => {
     try {
-      const res = await createProduct([
-        address, 
-        names,
-        description,
-        isbn
-      ])
+      const res = await contract.call('createProduct', names, description, isbn, price);
 
       console.log("contract call success", res)
+
+      var res2 = res.receipt.events[0].args.prodcutIds;
+      return res2;
     } catch (error) {
       console.log("contract call failure", error)
     }
   }
 
-  const generateUrls = async (address, isbn) => {
-    var res = []
-    var cur = btoa(address);
-    for (var i = 0; i < isbn.length; ++i) {
-      var tmp = cur.concat('/');
-      tmp = tmp + isbn[i];
+  const buyItem = async (id) => {
+    // const amount = ethers.utils.parseEther(ethAmount);
+    const res = await contract.call('buyTheProduct', id, {
+      value: ethers.utils.parseEther("0.0001")
+    });
+  }
+
+  const listItem = async (id) => {
+    const res = await contract.call('listProductForSale', id);
+  }
+
+  const generateUrls = async (res) => {
+    var res2 = []
+    for (var i = 0; i < res.length; ++i) {
+      var tmp = String(res[i]);
       var tmp2 = "https://intelligent-store-client.vercel.app/offline-home/validate/".concat(tmp);
-      res.push(tmp2);
+      res2.push(tmp2);
     }
-    console.log(res);
+    console.log(res2);
     var final_res = [];
     for (var x in res) {
       final_res.push({
-        "data": res[x],
+        "data": res2[x],
         "output": { "filename": "qrcodes" + String(x), "format": "png" }
       });
-    }
-    // for (var x in res) {
-    //   let data = {
-    //     "data": res[x],
-    //     "output": { "filename": res[x], "format": "svg" }
-    //   }
-    //   final_res["items"].push(data);
-    // }
+    }   
     return final_res;
   }
 
-  const getProductdetail = async (address, isbn) => {
-    var data = await contract.call('getProduct', address, isbn);
-    var parsedData = {
-      name: data.name,
-      owner: data.owner,
-      description: data.description,
-      isbn: isbn
-    }
-    return parsedData;
+  const getProductdetail = async (id) => {
+    console.log(contract);
+    var data = await contract.call('getProductDetails', id);
+    return data;
   }
 
   return (
@@ -82,6 +78,8 @@ export const StateContextProvider = ({ children }) => {
         setIsSuccess,
         getProductdetail,
         qr,
+        buyItem,
+        listItem,
         setQr,
       }}
     >

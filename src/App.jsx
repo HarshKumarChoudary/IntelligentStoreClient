@@ -12,7 +12,7 @@ const App = () => {
           <Route path="/nft-home" element={<Home status='1' title='All Digital Arts' />} />
           <Route path="/offline-home" element={<Offline />} />
           <Route path="/offline-home/upload" element={<Upload />} />
-          <Route path="/offline-home/validate/:code/:isbn" element={<Validate />} />
+          <Route path="/offline-home/validate/:id" element={<Validate />} />
           <Route path="/offline-home/upload/qr" element={<Qr />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-nft" element={<CreateNFT />} />

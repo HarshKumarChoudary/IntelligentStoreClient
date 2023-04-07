@@ -25,19 +25,21 @@ const Upload = () => {
             let names = []
             let description = []
             let isbn = []
+            let price = []
             for (var key in jsonData) {
                 names.push(jsonData[key].Name);
                 description.push(jsonData[key].Description);
                 isbn.push(jsonData[key].ISBN);
+                price.push(jsonData[key].Price);
             }
-            // await createProducts(names, description, isbn);
-            const res = await generateUrls(address, isbn);
-            setURL(res);
+            const res = await createProducts(names, description, isbn, price);
+            const res2 = await generateUrls(res);
+            setURL(res2);
             var collect = []
 
             
-            for (var x in res) {
-                var d = res[x];
+            for (var x in res2) {
+                var d = res2[x];
                 const options = {
                     method: 'POST',
                     url: 'https://qrcode3.p.rapidapi.com/qrcode/text',
