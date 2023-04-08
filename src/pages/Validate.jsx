@@ -11,18 +11,33 @@ const Validate = () => {
     const { getProductdetail, buyItem, listItem, address } = useStateContext();
     const [msg, setMsg] = useState(undefined);
 
+    const getRes = async () => {
+        setIsLoading(true);
+        try {
+            var res = await getProductdetail(id);
+            console.log(res);
+            var parsedData = parseData(res);
+            console.log(parsedData);
+            setMsg(parsedData);
+            // title, isbn, owners (0th one is manufacturer), price, description, date
+        } catch (error) {
+            console.log(error);
+            setMsg('Bad URL');
+            navigate('/');
+        }
+        setIsLoading(false);
+    }
+
     const buytheItem = () => {
         setIsLoading(true);
         buyItem(id);
-        setIsLoading(false);
-        getRes(id);
+        getRes();
     }
 
     const listit = () => {
         setIsLoading(true);
         listItem(id);
-        setIsLoading(false);
-        getRes(id);
+        getRes();
     }
 
     const parseData = (res) => {
@@ -42,23 +57,6 @@ const Validate = () => {
         data.isListed = res.isListed;
         data.productId = res.productId;
         return data;
-    }
-
-    const getRes = async () => {
-        setIsLoading(true);
-        try {
-            var res = await getProductdetail(id);
-            console.log(res);
-            var parsedData = parseData(res);
-            console.log(parsedData);
-            setMsg(parsedData);
-            // title, isbn, owners (0th one is manufacturer), price, description, date
-        } catch (error) {
-            console.log(error);
-            setMsg('Bad URL');
-            navigate('/');
-        }
-        setIsLoading(false);
     }
 
     if (id === undefined ) {
