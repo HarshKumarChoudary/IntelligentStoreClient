@@ -27,7 +27,7 @@ const First = () => {
                     <br />
                     <br />
                     <br />
-                <p className={styles.footerText}>Made with 💖 by Harsh Kumar Choudhary</p>
+                <p className={styles.footerText}>Made with 💖</p>
             </div>
             <div className="flex flex-1 justify-center p-8">
                 <img src={store} alt="Store-image" className='float'/>

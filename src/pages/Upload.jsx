@@ -101,7 +101,7 @@ const Upload = () => {
                                     </div>
                                 </div>
                             </div>
-                            <p className={`mb-32 mt-20 ${styles.footerText}`}>Made with 💖 by Harsh Kumar Choudhary</p>
+                            <p className={`mb-32 mt-20 ${styles.footerText}`}>Made with 💖</p>
                         </div>
                     </div>
                 </div>

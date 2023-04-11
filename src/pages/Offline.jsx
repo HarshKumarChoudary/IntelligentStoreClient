@@ -29,7 +29,7 @@ const Offline = () => {
               </div>  
             </div>
           </div>
-          <p className={`mb-32 ${styles.footerText}`}>Made with 💖 by Harsh Kumar Choudhary</p>
+          <p className={`mb-32 ${styles.footerText}`}>Made with 💖</p>
         </div>
         </div>
       </div>

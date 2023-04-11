@@ -26,7 +26,7 @@ const { qr } = useStateContext();
                           <h1 className={`flex ${styles.headText} head-text`}><img src={qr} alt="Qr Will appear here" /></h1>
                   </div>
                   
-                  <p className={`mb-32 mt-20 ${styles.footerText}`}>Made with 💖 by Harsh Kumar Choudhary</p>
+                  <p className={`mb-32 mt-20 ${styles.footerText}`}>Made with 💖</p>
               </div>
           </div>
       </div>
